@@ -6,20 +6,37 @@ const Principal = () => {
   const [formData, setFormData] = useState({
     question: '',
     imageUrl: '',
-    option1: '',
-    option2: '',
-    option3: '',
-    option4: ''
+    correctOption: "A",
+    opcoes: [
+      { optionLetter: "A", optionText: '' },
+      { optionLetter: "B", optionText: '' },
+      { optionLetter: "C", optionText: '' },
+      { optionLetter: "D", optionText: '' }
+    ]
   });
 
   const [questionExists, setQuestionExists] = useState(null); // Estado para verificar se a pergunta já existe
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: value
-    }));
+
+    // Verificar se o campo alterado é uma opção ou outro campo
+    if (id.startsWith("option")) {
+      const index = parseInt(id.replace("option", "")) - 1;
+      setFormData((prevData) => {
+        const updatedOpcoes = [...prevData.opcoes];
+        updatedOpcoes[index].optionText = value;
+        return {
+          ...prevData,
+          opcoes: updatedOpcoes
+        };
+      });
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [id]: value
+      }));
+    }
   };
 
   const handleCheckQuestion = async () => {
@@ -36,7 +53,7 @@ const Principal = () => {
       console.log(response.length);
 
       // Exibir mensagem caso a questão exista
-      if (response.length == 1) {
+      if (response.length === 1) {
         setQuestionExists(true);
       } else {
         setQuestionExists(false);
@@ -48,18 +65,41 @@ const Principal = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
+    // Verificar se a pergunta já existe
     handleCheckQuestion();
+
+    // Construir o JSON no formato esperado
+    const payload = {
+      questionText: formData.question,
+      imageUrl: formData.imageUrl || null, // Se a imagem não for fornecida, envia null
+      correctOption: formData.correctOption,
+      opcoes: formData.opcoes
+    };
+
+    try {
+      // Enviar os dados via POST
+      const response = await apiPost('/questao', payload);
+      console.log('Pergunta cadastrada com sucesso:', response);
+      handleClear();
+    } catch (error) {
+      console.error('Erro ao cadastrar pergunta:', error);
+    }
+
+    console.log(payload);
   };
 
   const handleClear = () => {
     setFormData({
       question: '',
       imageUrl: '',
-      option1: '',
-      option2: '',
-      option3: '',
-      option4: ''
+      correctOption: "A",
+      opcoes: [
+        { optionLetter: "A", optionText: '' },
+        { optionLetter: "B", optionText: '' },
+        { optionLetter: "C", optionText: '' },
+        { optionLetter: "D", optionText: '' }
+      ]
     });
     setQuestionExists(null); // Resetar o estado de existência da pergunta
   };
@@ -82,7 +122,7 @@ const Principal = () => {
         {/* Botão para verificar se a pergunta existe */}
         <button type="button" onClick={handleCheckQuestion}>Verificar Pergunta</button>
         {questionExists !== null && (
-          <p>{questionExists ? 'A pergunta já existe no banco de dados.' : 'A pergunta não foi encontrada.'}</p>
+          <p className='msg'>{questionExists ? <span className='spanOrange'>A pergunta já existe no banco de dados.</span>  : <span className='spanGreen'>A pergunta não foi encontrada.</span>}</p>
         )}
 
         {/* URL da Imagem */}
@@ -101,7 +141,7 @@ const Principal = () => {
           type="text"
           id="option1"
           placeholder="Digite a primeira opção..."
-          value={formData.option1}
+          value={formData.opcoes[0].optionText}
           onChange={handleChange}
           required
         />
@@ -111,7 +151,7 @@ const Principal = () => {
           type="text"
           id="option2"
           placeholder="Digite a segunda opção..."
-          value={formData.option2}
+          value={formData.opcoes[1].optionText}
           onChange={handleChange}
           required
         />
@@ -121,7 +161,7 @@ const Principal = () => {
           type="text"
           id="option3"
           placeholder="Digite a terceira opção..."
-          value={formData.option3}
+          value={formData.opcoes[2].optionText}
           onChange={handleChange}
           required
         />
@@ -131,7 +171,7 @@ const Principal = () => {
           type="text"
           id="option4"
           placeholder="Digite a quarta opção..."
-          value={formData.option4}
+          value={formData.opcoes[3].optionText}
           onChange={handleChange}
           required
         />

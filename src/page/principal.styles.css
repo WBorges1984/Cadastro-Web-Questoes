@@ -80,3 +80,22 @@ button[type="button"]:hover {
     background-color: #d38511;
     font-size: 50;
 }
+
+.spanGreen{
+    background-color: #28a745;
+    color: #f0f0f0;
+    padding: 10px;
+    
+}
+
+
+.spanOrange{
+    background-color: #d38511;
+    color: #f0f0f0;
+    padding: 10px;
+    
+}
+
+.msg{
+    margin: 5px;
+}
