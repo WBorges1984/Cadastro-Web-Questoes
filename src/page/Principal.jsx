@@ -120,12 +120,15 @@ const Principal = () => {
             onChange={handleChange}
             required
           />
-          {/* Botão para verificar se a pergunta existe */}
-          <button type="button" onClick={handleCheckQuestion}>Verificar Pergunta</button>
+          <div className="btnVErifica">
+            {/* Botão para verificar se a pergunta existe */}
+            <button type="button" onClick={handleCheckQuestion}>Verificar Pergunta</button>
+          </div>
           {questionExists !== null && (
             <p className='msg'>{questionExists ? <span className='spanOrange'>A pergunta já existe no banco de dados.</span>  : <span className='spanGreen'>A pergunta não foi encontrada.</span>}</p>
           )}
         </div>
+
         <div className="img">
           {/* URL da Imagem */}
           <label htmlFor="imageUrl">URL da Imagem (opcional):</label>
@@ -136,49 +139,56 @@ const Principal = () => {
             value={formData.imageUrl}
             onChange={handleChange}
           />
+          
         </div>
       </div>
+        <div className="respostas">
+            
+          <div className="res-1a2">
+            {/* Opções de Resposta */}
+            <label htmlFor="option1">Opção 1:</label>
+            <input
+              type="text"
+              id="option1"
+              placeholder="Digite a primeira opção..."
+              value={formData.opcoes[0].optionText}
+              onChange={handleChange}
+              required
+            />
 
-        {/* Opções de Resposta */}
-        <label htmlFor="option1">Opção 1:</label>
-        <input
-          type="text"
-          id="option1"
-          placeholder="Digite a primeira opção..."
-          value={formData.opcoes[0].optionText}
-          onChange={handleChange}
-          required
-        />
+            <label htmlFor="option2">Opção 2:</label>
+            <input
+              type="text"
+              id="option2"
+              placeholder="Digite a segunda opção..."
+              value={formData.opcoes[1].optionText}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        
+          <div className="res-3a4">
+            <label htmlFor="option3">Opção 3:</label>
+            <input
+              type="text"
+              id="option3"
+              placeholder="Digite a terceira opção..."
+              value={formData.opcoes[2].optionText}
+              onChange={handleChange}
+              required
+            />
 
-        <label htmlFor="option2">Opção 2:</label>
-        <input
-          type="text"
-          id="option2"
-          placeholder="Digite a segunda opção..."
-          value={formData.opcoes[1].optionText}
-          onChange={handleChange}
-          required
-        />
-
-        <label htmlFor="option3">Opção 3:</label>
-        <input
-          type="text"
-          id="option3"
-          placeholder="Digite a terceira opção..."
-          value={formData.opcoes[2].optionText}
-          onChange={handleChange}
-          required
-        />
-
-        <label htmlFor="option4">Opção 4:</label>
-        <input
-          type="text"
-          id="option4"
-          placeholder="Digite a quarta opção..."
-          value={formData.opcoes[3].optionText}
-          onChange={handleChange}
-          required
-        />
+            <label htmlFor="option4">Opção 4:</label>
+            <input
+              type="text"
+              id="option4"
+              placeholder="Digite a quarta opção..."
+              value={formData.opcoes[3].optionText}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
 
         {/* Botões */}
         <div className="button-container">
