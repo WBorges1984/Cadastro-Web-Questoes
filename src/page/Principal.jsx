@@ -109,31 +109,35 @@ const Principal = () => {
       <h1>Adicionar Pergunta</h1>
 
       <form onSubmit={handleSubmit}>
-        {/* Pergunta */}
-        <label htmlFor="question">Pergunta:</label>
-        <textarea
-          id="question"
-          placeholder="Digite sua pergunta aqui..."
-          value={formData.question}
-          onChange={handleChange}
-          required
-        />
-
-        {/* Botão para verificar se a pergunta existe */}
-        <button type="button" onClick={handleCheckQuestion}>Verificar Pergunta</button>
-        {questionExists !== null && (
-          <p className='msg'>{questionExists ? <span className='spanOrange'>A pergunta já existe no banco de dados.</span>  : <span className='spanGreen'>A pergunta não foi encontrada.</span>}</p>
-        )}
-
-        {/* URL da Imagem */}
-        <label htmlFor="imageUrl">URL da Imagem (opcional):</label>
-        <input
-          type="url"
-          id="imageUrl"
-          placeholder="https://exemplo.com/imagem.jpg"
-          value={formData.imageUrl}
-          onChange={handleChange}
-        />
+      <div className="perguntaImg">
+        <div className="pergunta">
+          {/* Pergunta */}
+          <label htmlFor="question">Pergunta:</label>
+          <textarea
+            id="question"
+            placeholder="Digite sua pergunta aqui..."
+            value={formData.question}
+            onChange={handleChange}
+            required
+          />
+          {/* Botão para verificar se a pergunta existe */}
+          <button type="button" onClick={handleCheckQuestion}>Verificar Pergunta</button>
+          {questionExists !== null && (
+            <p className='msg'>{questionExists ? <span className='spanOrange'>A pergunta já existe no banco de dados.</span>  : <span className='spanGreen'>A pergunta não foi encontrada.</span>}</p>
+          )}
+        </div>
+        <div className="img">
+          {/* URL da Imagem */}
+          <label htmlFor="imageUrl">URL da Imagem (opcional):</label>
+          <input
+            type="url"
+            id="imageUrl"
+            placeholder="https://exemplo.com/imagem.jpg"
+            value={formData.imageUrl}
+            onChange={handleChange}
+          />
+        </div>
+      </div>
 
         {/* Opções de Resposta */}
         <label htmlFor="option1">Opção 1:</label>
