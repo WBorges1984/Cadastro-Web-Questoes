@@ -150,7 +150,7 @@ const Principal = () => {
             <input
               type="text"
               id="option1"
-              placeholder="Digite a primeira opção..."
+              placeholder="Digite aqui a opção CORRETA..."
               value={formData.opcoes[0].optionText}
               onChange={handleChange}
               required
